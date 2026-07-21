@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <defs>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:0.98"/>
+      <stop offset="40%" style="stop-color:#16213e;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:0.9"/>
+    </linearGradient>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d2d2d"/>
+      <stop offset="50%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <!-- Temple arms -->
+  <rect x="10" y="78" width="60" height="5" rx="2.5" fill="url(#frameGrad)"/>
+  <rect x="330" y="78" width="60" height="5" rx="2.5" fill="url(#frameGrad)"/>
+  
+  <!-- Left lens (very large circle) -->
+  <circle cx="125" cy="82" r="62" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="10" filter="url(#shadow)"/>
+  
+  <!-- Right lens (very large circle) -->
+  <circle cx="275" cy="82" r="62" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="10" filter="url(#shadow)"/>
+  
+  <!-- Bridge -->
+  <path d="M 187 78 Q 200 65 213 78" stroke="url(#frameGrad)" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Nose pads -->
+  <ellipse cx="185" cy="92" rx="4" ry="5" fill="#3d3d3d"/>
+  <ellipse cx="215" cy="92" rx="4" ry="5" fill="#3d3d3d"/>
+  
+  <!-- Lens gradient overlay for depth -->
+  <circle cx="125" cy="82" r="55" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
+  <circle cx="275" cy="82" r="55" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
+  
+  <!-- Lens reflections -->
+  <path d="M 100 55 Q 115 45 130 55" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.12"/>
+  <path d="M 250 55 Q 265 45 280 55" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.12"/>
+  
+  <!-- Hinge details -->
+  <circle cx="70" cy="80" r="3" fill="#4d4d4d"/>
+  <circle cx="330" cy="80" r="3" fill="#4d4d4d"/>
+</svg>

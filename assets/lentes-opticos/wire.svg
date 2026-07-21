@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <defs>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafafa;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.08"/>
+    </linearGradient>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8"/>
+      <stop offset="25%" style="stop-color:#d4af37"/>
+      <stop offset="50%" style="stop-color:#ffd700"/>
+      <stop offset="75%" style="stop-color:#d4af37"/>
+      <stop offset="100%" style="stop-color:#e8e8e8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0.5" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  
+  <!-- Temple arms -->
+  <line x1="62" y1="75" x2="15" y2="71" stroke="url(#frameGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="338" y1="75" x2="385" y2="71" stroke="url(#frameGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Left lens -->
+  <path d="M 75 55 L 185 55 Q 192 55 192 62 L 192 102 Q 192 112 185 112 L 75 112 Q 68 112 68 102 L 68 62 Q 68 55 75 55 Z" 
+        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+  
+  <!-- Right lens -->
+  <path d="M 208 55 L 318 55 Q 325 55 325 62 L 325 102 Q 325 112 318 112 L 208 112 Q 201 112 201 102 L 201 62 Q 201 55 208 55 Z" 
+        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+  
+  <!-- Bridge -->
+  <path d="M 192 72 Q 200 64 208 72" stroke="url(#frameGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Nose pads -->
+  <ellipse cx="190" cy="82" rx="2" ry="3" fill="#d4af37"/>
+  <ellipse cx="210" cy="82" rx="2" ry="3" fill="#d4af37"/>
+  
+  <!-- Lens reflections -->
+  <path d="M 80 62 L 180 62" stroke="#ffffff" stroke-width="0.6" opacity="0.2"/>
+  <path d="M 213 62 L 313 62" stroke="#ffffff" stroke-width="0.6" opacity="0.2"/>
+  
+  <!-- Temple arm tips (ear pieces) -->
+  <path d="M 15 71 Q 10 70 8 72" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 385 71 Q 390 70 392 72" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Hinge details -->
+  <circle cx="66" cy="73" r="1.5" fill="#ffd700"/>
+  <circle cx="334" cy="73" r="1.5" fill="#ffd700"/>
+</svg>

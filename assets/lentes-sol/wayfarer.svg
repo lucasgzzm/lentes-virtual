@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <defs>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <!-- Temple arms -->
+  <rect x="15" y="72" width="65" height="4" rx="2" fill="#1a1a1a"/>
+  <rect x="320" y="72" width="65" height="4" rx="2" fill="#1a1a1a"/>
+  
+  <!-- Left lens (trapezoid shape) -->
+  <path d="M 90 45 L 190 45 L 195 110 L 85 115 Z" 
+        fill="url(#lensGrad)" stroke="#1a1a1a" stroke-width="8" stroke-linejoin="round" filter="url(#shadow)"/>
+  
+  <!-- Right lens (trapezoid shape) -->
+  <path d="M 210 45 L 310 45 L 315 115 L 205 110 Z" 
+        fill="url(#lensGrad)" stroke="#1a1a1a" stroke-width="8" stroke-linejoin="round" filter="url(#shadow)"/>
+  
+  <!-- Bridge -->
+  <path d="M 195 65 L 205 65" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Top frame accent -->
+  <path d="M 88 47 L 192 47 L 208 47 L 312 47" stroke="#2d2d2d" stroke-width="2" fill="none"/>
+  
+  <!-- Hinge details -->
+  <rect x="82" y="68" width="8" height="8" rx="1" fill="#c0c0c0"/>
+  <rect x="310" y="68" width="8" height="8" rx="1" fill="#c0c0c0"/>
+</svg>
