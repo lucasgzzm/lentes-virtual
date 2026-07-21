@@ -101,7 +101,7 @@ function main() {
                 if (detectState.detected > 0.5) {
                     faceDetected = true;
                     lastDetectState = detectState;
-                    els.cameraContainer.classList.add('tracking');
+                    document.body.classList.add('tracking');
 
                     if (!smooth.initialized) {
                         smooth.x = detectState.x;
@@ -125,7 +125,7 @@ function main() {
                     faceDetected = false;
                     lastDetectState = null;
                     smooth.initialized = false;
-                    els.cameraContainer.classList.remove('tracking');
+                    document.body.classList.remove('tracking');
                     CVD.ctx.clearRect(0, 0, CVD.canvas.width, CVD.canvas.height);
                 }
                 CVD.update_canvasTexture();

@@ -2,112 +2,103 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Prueba de Lentes Virtual</title>
+    <title>Prueba de Lentes</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="theme-color" content="#000000">
 </head>
 <body>
-    <div id="app">
-        <header>
-            <h1>Prueba de Lentes</h1>
-            <p class="subtitle">Selecciona unos lentes y mira cómo te quedan</p>
-        </header>
-
-        <main>
-            <!-- Contenedor de la cámara -->
-            <div id="camera-container">
-                <video id="webcam" autoplay playsinline muted></video>
-                <canvas id="jeeFaceFilterCanvas"></canvas>
-                
-                <!-- Estado de carga -->
-                <div id="loading-overlay">
-                    <div class="spinner"></div>
-                    <p>Cargando modelo de detección facial...</p>
-                </div>
-                
-                <!-- Mensaje de error -->
-                <div id="error-overlay" class="hidden">
-                    <p id="error-message">Error al acceder a la cámara</p>
-                    <button id="retry-btn" class="btn">Reintentar</button>
-                </div>
-            </div>
-
-            <!-- Selector de lentes -->
-            <div id="glasses-selector">
-                <div class="selector-header">
-                    <h2>Elige tus lentes</h2>
-                    <div id="category-tabs">
-                        <button class="tab active" data-category="sol">Sol</button>
-                        <button class="tab" data-category="opticos">Ópticos</button>
-                    </div>
-                </div>
-                
-                <div id="glasses-grid">
-                    <!-- Lentes de sol -->
-                    <div class="glasses-option selected" data-type="sol" data-src="assets/lentes-sol/aviator.svg">
-                        <img src="assets/lentes-sol/aviator.svg" alt="Aviador">
-                        <span>Aviador</span>
-                    </div>
-                    <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/wayfarer.svg">
-                        <img src="assets/lentes-sol/wayfarer.svg" alt="Wayfarer">
-                        <span>Wayfarer</span>
-                    </div>
-                    <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/round.svg">
-                        <img src="assets/lentes-sol/round.svg" alt="Redondos">
-                        <span>Redondos</span>
-                    </div>
-                    <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/cat-eye.svg">
-                        <img src="assets/lentes-sol/cat-eye.svg" alt="Cat Eye">
-                        <span>Cat Eye</span>
-                    </div>
-                    <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/oversized.svg">
-                        <img src="assets/lentes-sol/oversized.svg" alt="Oversized">
-                        <span>Oversized</span>
-                    </div>
-                    
-                    <!-- Lentes ópticos -->
-                    <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/rectangular.svg">
-                        <img src="assets/lentes-opticos/rectangular.svg" alt="Rectangular">
-                        <span>Rectangular</span>
-                    </div>
-                    <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/round-optic.svg">
-                        <img src="assets/lentes-opticos/round-optic.svg" alt="Redondos">
-                        <span>Redondos</span>
-                    </div>
-                    <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/clubmaster.svg">
-                        <img src="assets/lentes-opticos/clubmaster.svg" alt="Clubmaster">
-                        <span>Clubmaster</span>
-                    </div>
-                    <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/wire.svg">
-                        <img src="assets/lentes-opticos/wire.svg" alt="Marco Delgado">
-                        <span>Marco Delgado</span>
-                    </div>
-                    <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/rimless.svg">
-                        <img src="assets/lentes-opticos/rimless.svg" alt="Sin Marco">
-                        <span>Sin Marco</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controles -->
-            <div id="controls">
-                <button id="capture-btn" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
-                    </svg>
-                    Capturar Foto
-                </button>
-            </div>
-        </main>
-
-        <!-- Canvas oculto para captura -->
-        <canvas id="capture-canvas" class="hidden"></canvas>
+    <!-- FULLSCREEN CAMERA -->
+    <div id="camera-container">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="jeeFaceFilterCanvas"></canvas>
     </div>
+
+    <!-- TOP BAR -->
+    <div id="top-bar">
+        <h1>Lentes</h1>
+        <div id="tracking-dot"></div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Preparando cámara...</p>
+    </div>
+
+    <!-- ERROR -->
+    <div id="error-overlay" class="hidden">
+        <p id="error-message">No se pudo acceder a la cámara</p>
+        <button id="retry-btn" class="btn" style="margin-top:16px;background:var(--primary);color:white;">Reintentar</button>
+    </div>
+
+    <!-- CAPTURE BUTTON -->
+    <button id="capture-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/>
+        </svg>
+    </button>
+
+    <!-- FLOATING BOTTOM PANEL -->
+    <div id="bottom-panel">
+        <div id="glasses-panel">
+            <div id="category-tabs">
+                <button class="tab active" data-category="sol">Sol</button>
+                <button class="tab" data-category="opticos">Opticos</button>
+            </div>
+
+            <div id="glasses-grid">
+                <div class="glasses-option selected" data-type="sol" data-src="assets/lentes-sol/aviator.svg">
+                    <img src="assets/lentes-sol/aviator.svg" alt="Aviador">
+                    <span>Aviador</span>
+                </div>
+                <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/wayfarer.svg">
+                    <img src="assets/lentes-sol/wayfarer.svg" alt="Wayfarer">
+                    <span>Wayfarer</span>
+                </div>
+                <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/round.svg">
+                    <img src="assets/lentes-sol/round.svg" alt="Redondos">
+                    <span>Redondos</span>
+                </div>
+                <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/cat-eye.svg">
+                    <img src="assets/lentes-sol/cat-eye.svg" alt="Cat Eye">
+                    <span>Cat Eye</span>
+                </div>
+                <div class="glasses-option" data-type="sol" data-src="assets/lentes-sol/oversized.svg">
+                    <img src="assets/lentes-sol/oversized.svg" alt="Oversized">
+                    <span>Oversized</span>
+                </div>
+
+                <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/rectangular.svg">
+                    <img src="assets/lentes-opticos/rectangular.svg" alt="Rectangular">
+                    <span>Rectangular</span>
+                </div>
+                <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/round-optic.svg">
+                    <img src="assets/lentes-opticos/round-optic.svg" alt="Redondos">
+                    <span>Redondos</span>
+                </div>
+                <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/clubmaster.svg">
+                    <img src="assets/lentes-opticos/clubmaster.svg" alt="Clubmaster">
+                    <span>Clubmaster</span>
+                </div>
+                <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/wire.svg">
+                    <img src="assets/lentes-opticos/wire.svg" alt="Delgado">
+                    <span>Delgado</span>
+                </div>
+                <div class="glasses-option hidden" data-type="opticos" data-src="assets/lentes-opticos/rimless.svg">
+                    <img src="assets/lentes-opticos/rimless.svg" alt="Sin Marco">
+                    <span>Sin Marco</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIDDEN CAPTURE CANVAS -->
+    <canvas id="capture-canvas" class="hidden"></canvas>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/gh/jeeliz/jeelizFaceFilter@master/dist/jeelizFaceFilter.js" crossorigin="anonymous"></script>
