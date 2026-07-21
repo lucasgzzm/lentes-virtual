@@ -1,4 +1,4 @@
-// Virtual Try-On Glasses v2 - 360° Real-Time Tracking
+// Virtual Try-On Glasses v3 - iPhone Optimized + 360° Tracking
 // Uses JeelizFaceFilter + JeelizCanvas2DHelper
 
 function main() {
@@ -8,7 +8,6 @@ function main() {
     var faceDetected = false;
     var lastDetectState = null;
 
-    // Smooth interpolation state
     var smooth = {
         x: 0, y: 0, s: 1,
         rx: 0, ry: 0, rz: 0,
@@ -60,12 +59,37 @@ function main() {
             NNCPath: 'https://cdn.jsdelivr.net/gh/jeeliz/jeelizFaceFilter@master/neuralNets/',
             followZRot: true,
 
+            videoSettings: {
+                facingMode: 'user',
+                idealWidth: 1280,
+                idealHeight: 720,
+                minWidth: 640,
+                minHeight: 480,
+                maxWidth: 1920,
+                maxHeight: 1080,
+                rotate: 0,
+                flipX: true
+            },
+
+            scanSettings: {
+                scale0Factor: 0.8,
+                nScaleLevels: 3,
+                overlapFactors: [2, 2, 3]
+            },
+
+            stabilizationSettings: {
+                translationFactorRange: [0.002, 0.005],
+                rotationFactorRange: [0.015, 0.1],
+                qualityFactorRange: [0.9, 0.98],
+                alphaRange: [0.05, 1.0]
+            },
+
             callbackReady: function(errCode, spec) {
                 if (errCode) {
                     showError('Error al inicializar: ' + errCode);
                     return;
                 }
-                console.log('JeelizFaceFilter ready');
+                console.log('JeelizFaceFilter ready', spec);
                 CVD = JeelizCanvas2DHelper(spec);
                 els.loadingOverlay.classList.add('hidden');
                 selectGlasses(els.glassesOptions[0]);
@@ -125,54 +149,38 @@ function main() {
         var faceCenterX = faceCoords.x + faceCoords.w / 2;
         var faceCenterY = faceCoords.y + faceCoords.h * 0.38;
 
-        // Base dimensions
         var baseW = faceCoords.w * 1.15;
         var aspectRatio = glassesImage.naturalHeight / glassesImage.naturalWidth;
         var baseH = baseW * aspectRatio;
 
-        // 360° EFFECT: Apply perspective distortion based on head rotation
         var ry = ds.ry || 0;
         var rx = ds.rx || 0;
         var rz = ds.rz || 0;
 
-        // Yaw (ry): horizontal rotation - squash width and shift
         var yawFactor = Math.cos(ry);
         var perspX = Math.sin(ry) * baseW * 0.12;
-
-        // Pitch (rx): vertical tilt - squash height slightly
         var pitchFactor = Math.cos(rx * 0.5);
-
-        // Scale based on depth (scale increases = face closer)
         var depthScale = 0.8 + ds.s * 0.5;
 
         var finalW = baseW * Math.abs(yawFactor) * depthScale;
         var finalH = baseH * pitchFactor * depthScale;
 
-        // Position with perspective offset
         var glassesX = faceCenterX - finalW / 2 + perspX * depthScale;
         var glassesY = faceCenterY - finalH * 0.35;
 
         ctx.save();
         ctx.translate(faceCenterX, faceCenterY);
-
-        // Roll rotation (head tilt left/right)
         ctx.rotate(rz);
-
-        // 3D perspective transform using matrix
-        // Simulate yaw by skewing the canvas
         var skewX = Math.sin(ry) * 0.15;
         var skewY = Math.sin(rx * 0.3) * 0.08;
         ctx.transform(1, skewY, skewX, 1, 0, 0);
-
         ctx.translate(-faceCenterX, -faceCenterY);
 
-        // Draw with shadow for depth
         ctx.shadowColor = 'rgba(0,0,0,0.25)';
         ctx.shadowBlur = 8 * depthScale;
         ctx.shadowOffsetY = 3 * depthScale;
 
         ctx.drawImage(glassesImage, glassesX, glassesY, finalW, finalH);
-
         ctx.restore();
     }
 
@@ -205,11 +213,9 @@ function main() {
         cv.height = glCanvas.height;
         ctx.drawImage(glCanvas, 0, 0);
 
-        // Re-draw glasses at full res
         if (faceDetected && lastDetectState && CVD && glassesImage.complete && glassesImage.naturalWidth > 0) {
             var ds = smooth;
             var cw = cv.width;
-            var ch = cv.height;
             var scaleRatio = cw / CVD.canvas.width;
 
             var faceCoords = CVD.getCoordinates(ds);
@@ -258,6 +264,20 @@ function main() {
         els.errorOverlay.classList.remove('hidden');
         els.errorMessage.textContent = msg;
     }
+
+    // Handle orientation change
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (typeof JEELIZFACEFILTER !== 'undefined' && JEELIZFACEFILTER.resize) {
+                JEELIZFACEFILTER.resize();
+            }
+            if (CVD && CVD.resize) {
+                CVD.resize();
+            }
+        }, 200);
+    });
 
     initFaceFilter();
 }
