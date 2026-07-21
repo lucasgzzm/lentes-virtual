@@ -45,10 +45,11 @@ html, body {
 
 #jeeFaceFilterCanvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
     pointer-events: none;
 }
 
