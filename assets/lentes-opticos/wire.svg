@@ -1,49 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#fafafa;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.08"/>
+    <!-- Clear lens -->
+    <linearGradient id="clearL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(215,220,225,0.06)"/>
+      <stop offset="50%" stop-color="rgba(200,210,215,0.03)"/>
+      <stop offset="100%" stop-color="rgba(215,220,225,0.06)"/>
     </linearGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e8e8e8"/>
-      <stop offset="25%" style="stop-color:#d4af37"/>
-      <stop offset="50%" style="stop-color:#ffd700"/>
-      <stop offset="75%" style="stop-color:#d4af37"/>
-      <stop offset="100%" style="stop-color:#e8e8e8"/>
+    <linearGradient id="clearR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(215,220,225,0.06)"/>
+      <stop offset="50%" stop-color="rgba(200,210,215,0.03)"/>
+      <stop offset="100%" stop-color="rgba(215,220,225,0.06)"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0.5" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.12"/>
-    </filter>
+    <!-- Ultra-thin gold wire -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f5d680"/>
+      <stop offset="30%" stop-color="#d4a843"/>
+      <stop offset="60%" stop-color="#c9952a"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <!-- Subtle glare -->
+    <radialGradient id="glareL" cx="35%" cy="30%" r="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="glareR" cx="65%" cy="30%" r="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- Minimal lens edge -->
+    <linearGradient id="lensedge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(200,200,200,0.08)"/>
+      <stop offset="50%" stop-color="rgba(200,200,200,0)"/>
+      <stop offset="100%" stop-color="rgba(200,200,200,0.06)"/>
+    </linearGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <line x1="62" y1="75" x2="15" y2="71" stroke="url(#frameGrad)" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="338" y1="75" x2="385" y2="71" stroke="url(#frameGrad)" stroke-width="1.5" stroke-linecap="round"/>
-  
+
+  <!-- Left temple (ultra-thin) -->
+  <path d="M44,74 L0,72" stroke="url(#gold)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M356,74 L400,72" stroke="url(#gold)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
   <!-- Left lens -->
-  <path d="M 75 55 L 185 55 Q 192 55 192 62 L 192 102 Q 192 112 185 112 L 75 112 Q 68 112 68 102 L 68 62 Q 68 55 75 55 Z" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="1.5" filter="url(#shadow)"/>
-  
+  <circle cx="118" cy="80" r="46" fill="url(#clearL)" stroke="url(#gold)" stroke-width="1"/>
+  <circle cx="118" cy="80" r="46" fill="url(#lensedge)"/>
+  <circle cx="118" cy="80" r="46" fill="url(#glareL)"/>
+  <ellipse cx="104" cy="66" rx="14" ry="6" fill="rgba(255,255,255,0.12)" transform="rotate(-8,104,66)"/>
+  <ellipse cx="128" cy="95" rx="4" ry="3" fill="rgba(255,255,255,0.06)"/>
+
   <!-- Right lens -->
-  <path d="M 208 55 L 318 55 Q 325 55 325 62 L 325 102 Q 325 112 318 112 L 208 112 Q 201 112 201 102 L 201 62 Q 201 55 208 55 Z" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="1.5" filter="url(#shadow)"/>
-  
-  <!-- Bridge -->
-  <path d="M 192 72 Q 200 64 208 72" stroke="url(#frameGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  
-  <!-- Nose pads -->
-  <ellipse cx="190" cy="82" rx="2" ry="3" fill="#d4af37"/>
-  <ellipse cx="210" cy="82" rx="2" ry="3" fill="#d4af37"/>
-  
-  <!-- Lens reflections -->
-  <path d="M 80 62 L 180 62" stroke="#ffffff" stroke-width="0.6" opacity="0.2"/>
-  <path d="M 213 62 L 313 62" stroke="#ffffff" stroke-width="0.6" opacity="0.2"/>
-  
-  <!-- Temple arm tips (ear pieces) -->
-  <path d="M 15 71 Q 10 70 8 72" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M 385 71 Q 390 70 392 72" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round"/>
-  
-  <!-- Hinge details -->
-  <circle cx="66" cy="73" r="1.5" fill="#ffd700"/>
-  <circle cx="334" cy="73" r="1.5" fill="#ffd700"/>
+  <circle cx="282" cy="80" r="46" fill="url(#clearR)" stroke="url(#gold)" stroke-width="1"/>
+  <circle cx="282" cy="80" r="46" fill="url(#lensedge)"/>
+  <circle cx="282" cy="80" r="46" fill="url(#glareR)"/>
+  <ellipse cx="292" cy="66" rx="14" ry="6" fill="rgba(255,255,255,0.12)" transform="rotate(8,292,66)"/>
+  <ellipse cx="272" cy="95" rx="4" ry="3" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- Delicate bridge -->
+  <path d="M163,76 Q200,88 237,76" stroke="url(#gold)" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose pads (tiny, delicate) -->
+  <ellipse cx="178" cy="90" rx="2.5" ry="4" fill="url(#gold)" stroke="#b8860b" stroke-width="0.3"/>
+  <ellipse cx="222" cy="90" rx="2.5" ry="4" fill="url(#gold)" stroke="#b8860b" stroke-width="0.3"/>
+  <!-- Nose pad arms -->
+  <line x1="178" y1="86" x2="174" y2="78" stroke="url(#gold)" stroke-width="0.6"/>
+  <line x1="222" y1="86" x2="226" y2="78" stroke="url(#gold)" stroke-width="0.6"/>
+
+  <!-- Tiny hinge details -->
+  <circle cx="45" cy="74" r="1.5" fill="url(#gold)" stroke="#a07820" stroke-width="0.3"/>
+  <circle cx="355" cy="74" r="1.5" fill="url(#gold)" stroke="#a07820" stroke-width="0.3"/>
 </svg>

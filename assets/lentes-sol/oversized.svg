@@ -1,46 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:0.98"/>
-      <stop offset="40%" style="stop-color:#16213e;stop-opacity:0.95"/>
-      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:0.9"/>
+    <!-- Lens gradient - dark with warm tint -->
+    <linearGradient id="lensL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="30%" stop-color="#282828"/>
+      <stop offset="55%" stop-color="#101010"/>
+      <stop offset="80%" stop-color="#1e1e1e"/>
+      <stop offset="100%" stop-color="#141414"/>
     </linearGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#2d2d2d"/>
-      <stop offset="50%" style="stop-color:#1a1a1a"/>
-      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    <linearGradient id="lensR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="30%" stop-color="#282828"/>
+      <stop offset="55%" stop-color="#101010"/>
+      <stop offset="80%" stop-color="#1e1e1e"/>
+      <stop offset="100%" stop-color="#141414"/>
     </linearGradient>
-    <filter id="shadow" x="-15%" y="-15%" width="140%" height="140%">
-      <feDropShadow dx="1" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
-    </filter>
+    <!-- Matte black frame -->
+    <linearGradient id="mblock" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#333"/>
+      <stop offset="30%" stop-color="#1a1a1a"/>
+      <stop offset="70%" stop-color="#111"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <!-- Strong reflection highlight -->
+    <radialGradient id="strongrefL" cx="30%" cy="22%" r="42%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="strongrefR" cx="70%" cy="22%" r="42%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- Edge reflection -->
+    <radialGradient id="edgerefL" cx="20%" cy="60%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="edgerefR" cx="80%" cy="60%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <rect x="10" y="78" width="60" height="5" rx="2.5" fill="url(#frameGrad)"/>
-  <rect x="330" y="78" width="60" height="5" rx="2.5" fill="url(#frameGrad)"/>
-  
-  <!-- Left lens (very large circle) -->
-  <circle cx="125" cy="82" r="62" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="10" filter="url(#shadow)"/>
-  
-  <!-- Right lens (very large circle) -->
-  <circle cx="275" cy="82" r="62" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="10" filter="url(#shadow)"/>
-  
-  <!-- Bridge -->
-  <path d="M 187 78 Q 200 65 213 78" stroke="url(#frameGrad)" stroke-width="8" fill="none" stroke-linecap="round"/>
-  
+
+  <!-- Left temple (thick matte) -->
+  <path d="M28,64 L0,60" stroke="url(#mblock)" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M28,61 L0,57" stroke="rgba(60,60,60,0.3)" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M372,64 L400,60" stroke="url(#mblock)" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M372,61 L400,57" stroke="rgba(60,60,60,0.3)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lens - large round -->
+  <circle cx="118" cy="84" r="58" fill="url(#lensL)" stroke="url(#mblock)" stroke-width="6"/>
+  <!-- Left lens reflections -->
+  <circle cx="118" cy="84" r="58" fill="url(#strongrefL)"/>
+  <circle cx="118" cy="84" r="58" fill="url(#edgerefL)"/>
+  <ellipse cx="95" cy="62" rx="28" ry="12" fill="rgba(255,255,255,0.22)" transform="rotate(-8,95,62)"/>
+  <ellipse cx="130" cy="108" rx="10" ry="5" fill="rgba(255,255,255,0.1)" transform="rotate(15,130,108)"/>
+
+  <!-- Right lens - large round -->
+  <circle cx="282" cy="84" r="58" fill="url(#lensR)" stroke="url(#mblock)" stroke-width="6"/>
+  <!-- Right lens reflections -->
+  <circle cx="282" cy="84" r="58" fill="url(#strongrefR)"/>
+  <circle cx="282" cy="84" r="58" fill="url(#edgerefR)"/>
+  <ellipse cx="298" cy="62" rx="28" ry="12" fill="rgba(255,255,255,0.22)" transform="rotate(8,298,62)"/>
+  <ellipse cx="270" cy="108" rx="10" ry="5" fill="rgba(255,255,255,0.1)" transform="rotate(-15,270,108)"/>
+
+  <!-- Bridge (thick) -->
+  <path d="M175,72 Q200,90 225,72" stroke="url(#mblock)" stroke-width="6" fill="none" stroke-linecap="round"/>
+
   <!-- Nose pads -->
-  <ellipse cx="185" cy="92" rx="4" ry="5" fill="#3d3d3d"/>
-  <ellipse cx="215" cy="92" rx="4" ry="5" fill="#3d3d3d"/>
-  
-  <!-- Lens gradient overlay for depth -->
-  <circle cx="125" cy="82" r="55" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
-  <circle cx="275" cy="82" r="55" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
-  
-  <!-- Lens reflections -->
-  <path d="M 100 55 Q 115 45 130 55" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.12"/>
-  <path d="M 250 55 Q 265 45 280 55" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.12"/>
-  
-  <!-- Hinge details -->
-  <circle cx="70" cy="80" r="3" fill="#4d4d4d"/>
-  <circle cx="330" cy="80" r="3" fill="#4d4d4d"/>
+  <ellipse cx="188" cy="92" rx="5" ry="7" fill="#222" stroke="#111" stroke-width="0.8"/>
+  <ellipse cx="212" cy="92" rx="5" ry="7" fill="#222" stroke="#111" stroke-width="0.8"/>
+  <!-- Nose pad arms -->
+  <line x1="188" y1="85" x2="184" y2="76" stroke="#222" stroke-width="1.8"/>
+  <line x1="212" y1="85" x2="216" y2="76" stroke="#222" stroke-width="1.8"/>
 </svg>

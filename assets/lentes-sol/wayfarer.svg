@@ -1,33 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:0.95"/>
-      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:0.9"/>
+    <!-- Left lens gradient - dark with subtle blue reflection -->
+    <linearGradient id="lensL" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="40%" stop-color="#252530"/>
+      <stop offset="70%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#1a1a1e"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.4"/>
-    </filter>
+    <linearGradient id="lensR" x1="100%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="40%" stop-color="#252530"/>
+      <stop offset="70%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#1a1a1e"/>
+    </linearGradient>
+    <!-- Black acetate frame -->
+    <linearGradient id="acetate" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="25%" stop-color="#1a1a1a"/>
+      <stop offset="75%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <!-- Blue reflection on lens -->
+    <radialGradient id="bluerefL" cx="30%" cy="25%" r="45%">
+      <stop offset="0%" stop-color="rgba(100,130,200,0.25)"/>
+      <stop offset="100%" stop-color="rgba(100,130,200,0)"/>
+    </radialGradient>
+    <radialGradient id="bluerefR" cx="70%" cy="25%" r="45%">
+      <stop offset="0%" stop-color="rgba(100,130,200,0.25)"/>
+      <stop offset="100%" stop-color="rgba(100,130,200,0)"/>
+    </radialGradient>
+    <!-- White glare -->
+    <radialGradient id="glareL" cx="35%" cy="30%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="glareR" cx="65%" cy="30%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <rect x="15" y="72" width="65" height="4" rx="2" fill="#1a1a1a"/>
-  <rect x="320" y="72" width="65" height="4" rx="2" fill="#1a1a1a"/>
-  
-  <!-- Left lens (trapezoid shape) -->
-  <path d="M 90 45 L 190 45 L 195 110 L 85 115 Z" 
-        fill="url(#lensGrad)" stroke="#1a1a1a" stroke-width="8" stroke-linejoin="round" filter="url(#shadow)"/>
-  
-  <!-- Right lens (trapezoid shape) -->
-  <path d="M 210 45 L 310 45 L 315 115 L 205 110 Z" 
-        fill="url(#lensGrad)" stroke="#1a1a1a" stroke-width="8" stroke-linejoin="round" filter="url(#shadow)"/>
-  
+
+  <!-- Left temple arm (chunky) -->
+  <rect x="0" y="62" width="35" height="10" rx="3" fill="url(#acetate)"/>
+  <rect x="0" y="62" width="35" height="5" rx="3" fill="rgba(60,60,60,0.4)"/>
+  <!-- Right temple arm (chunky) -->
+  <rect x="365" y="62" width="35" height="10" rx="3" fill="url(#acetate)"/>
+  <rect x="365" y="62" width="35" height="5" rx="3" fill="rgba(60,60,60,0.4)"/>
+
+  <!-- Left lens - trapezoid -->
+  <path d="M55,50 L165,48 L175,58 L172,130 Q170,142 160,144 L60,146 Q48,144 46,132 L42,60 Q40,50 55,50 Z" fill="url(#lensL)" stroke="url(#acetate)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Left lens reflections -->
+  <path d="M55,50 L165,48 L175,58 L172,130 Q170,142 160,144 L60,146 Q48,144 46,132 L42,60 Q40,50 55,50 Z" fill="url(#bluerefL)"/>
+  <path d="M55,50 L165,48 L175,58 L172,130 Q170,142 160,144 L60,146 Q48,144 46,132 L42,60 Q40,50 55,50 Z" fill="url(#glareL)"/>
+  <ellipse cx="90" cy="62" rx="25" ry="8" fill="rgba(255,255,255,0.18)" transform="rotate(-5,90,62)"/>
+  <ellipse cx="62" cy="78" rx="6" ry="3" fill="rgba(255,255,255,0.1)" transform="rotate(-10,62,78)"/>
+
+  <!-- Right lens - trapezoid -->
+  <path d="M345,50 L235,48 L225,58 L228,130 Q230,142 240,144 L340,146 Q352,144 354,132 L358,60 Q360,50 345,50 Z" fill="url(#lensR)" stroke="url(#acetate)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Right lens reflections -->
+  <path d="M345,50 L235,48 L225,58 L228,130 Q230,142 240,144 L340,146 Q352,144 354,132 L358,60 Q360,50 345,50 Z" fill="url(#bluerefR)"/>
+  <path d="M345,50 L235,48 L225,58 L228,130 Q230,142 240,144 L340,146 Q352,144 354,132 L358,60 Q360,50 345,50 Z" fill="url(#glareR)"/>
+  <ellipse cx="310" cy="62" rx="25" ry="8" fill="rgba(255,255,255,0.18)" transform="rotate(5,310,62)"/>
+
   <!-- Bridge -->
-  <path d="M 195 65 L 205 65" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round"/>
-  
-  <!-- Top frame accent -->
-  <path d="M 88 47 L 192 47 L 208 47 L 312 47" stroke="#2d2d2d" stroke-width="2" fill="none"/>
-  
-  <!-- Hinge details -->
-  <rect x="82" y="68" width="8" height="8" rx="1" fill="#c0c0c0"/>
-  <rect x="310" y="68" width="8" height="8" rx="1" fill="#c0c0c0"/>
+  <path d="M175,72 Q200,88 225,72" stroke="url(#acetate)" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose pads -->
+  <ellipse cx="185" cy="92" rx="5" ry="7" fill="#2a2a2a" stroke="#111" stroke-width="0.8"/>
+  <ellipse cx="215" cy="92" rx="5" ry="7" fill="#2a2a2a" stroke="#111" stroke-width="0.8"/>
+  <!-- Nose pad arms -->
+  <line x1="185" y1="85" x2="182" y2="76" stroke="#222" stroke-width="1.5"/>
+  <line x1="215" y1="85" x2="218" y2="76" stroke="#222" stroke-width="1.5"/>
 </svg>

@@ -1,40 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:0.95"/>
-      <stop offset="50%" style="stop-color:#16213e;stop-opacity:0.9"/>
-      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:0.85"/>
+    <!-- Left lens gradient -->
+    <linearGradient id="lensL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="35%" stop-color="#2c2c2c"/>
+      <stop offset="60%" stop-color="#0f0f0f"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </linearGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffd700"/>
-      <stop offset="50%" style="stop-color:#daa520"/>
-      <stop offset="100%" style="stop-color:#b8860b"/>
+    <!-- Right lens gradient -->
+    <linearGradient id="lensR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="35%" stop-color="#2c2c2c"/>
+      <stop offset="60%" stop-color="#0f0f0f"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
+    <!-- Gold frame gradient -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f5d680"/>
+      <stop offset="30%" stop-color="#d4a843"/>
+      <stop offset="60%" stop-color="#c9952a"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <!-- Lens reflection -->
+    <radialGradient id="reflectL" cx="35%" cy="30%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="reflectR" cx="65%" cy="30%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- Temple shadow -->
+    <linearGradient id="tshadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.3)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+    <!-- Clip for teardrop lens shape -->
+    <clipPath id="clipL">
+      <ellipse cx="120" cy="90" rx="52" ry="55"/>
+    </clipPath>
+    <clipPath id="clipR">
+      <ellipse cx="280" cy="90" rx="52" ry="55"/>
+    </clipPath>
   </defs>
-  
+
   <!-- Temple arms (behind lenses) -->
-  <path d="M 60 75 L 10 70" stroke="url(#frameGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <path d="M 340 75 L 390 70" stroke="url(#frameGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  
-  <!-- Left lens (teardrop shape) -->
-  <path d="M 100 50 Q 100 35 130 30 Q 160 25 180 40 Q 195 55 190 80 Q 185 105 160 115 Q 135 125 115 110 Q 95 95 100 50 Z" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2" filter="url(#shadow)"/>
-  
-  <!-- Right lens (teardrop shape) -->
-  <path d="M 300 50 Q 300 35 270 30 Q 240 25 220 40 Q 205 55 210 80 Q 215 105 240 115 Q 265 125 285 110 Q 305 95 300 50 Z" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2" filter="url(#shadow)"/>
-  
-  <!-- Bridge -->
-  <path d="M 190 70 Q 200 55 210 70" stroke="url(#frameGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  
+  <!-- Left temple -->
+  <path d="M30,72 L0,68" stroke="url(#gold)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M30,74 L0,70" stroke="rgba(0,0,0,0.15)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M370,72 L400,68" stroke="url(#gold)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M370,74 L400,70" stroke="rgba(0,0,0,0.15)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lens - teardrop shape -->
+  <ellipse cx="120" cy="90" rx="52" ry="55" fill="url(#lensL)" stroke="url(#gold)" stroke-width="1.5"/>
+  <!-- Left lens reflections -->
+  <ellipse cx="120" cy="90" rx="52" ry="55" fill="url(#reflectL)"/>
+  <ellipse cx="100" cy="72" rx="18" ry="10" fill="rgba(255,255,255,0.2)" transform="rotate(-15,100,72)"/>
+  <ellipse cx="135" cy="105" rx="8" ry="5" fill="rgba(255,255,255,0.12)" transform="rotate(20,135,105)"/>
+
+  <!-- Right lens - teardrop shape -->
+  <ellipse cx="280" cy="90" rx="52" ry="55" fill="url(#lensR)" stroke="url(#gold)" stroke-width="1.5"/>
+  <!-- Right lens reflections -->
+  <ellipse cx="280" cy="90" rx="52" ry="55" fill="url(#reflectR)"/>
+  <ellipse cx="295" cy="72" rx="18" ry="10" fill="rgba(255,255,255,0.2)" transform="rotate(15,295,72)"/>
+  <ellipse cx="265" cy="105" rx="8" ry="5" fill="rgba(255,255,255,0.12)" transform="rotate(-20,265,105)"/>
+
+  <!-- Double bridge bar - top -->
+  <line x1="170" y1="70" x2="230" y2="70" stroke="url(#gold)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Double bridge bar - bottom -->
+  <path d="M172,78 Q200,95 228,78" stroke="url(#gold)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
   <!-- Nose pads -->
-  <ellipse cx="188" cy="80" rx="3" ry="4" fill="#daa520"/>
-  <ellipse cx="212" cy="80" rx="3" ry="4" fill="#daa520"/>
-  
-  <!-- Temple arm details (hinges) -->
-  <circle cx="98" cy="72" r="2.5" fill="#ffd700"/>
-  <circle cx="302" cy="72" r="2.5" fill="#ffd700"/>
+  <ellipse cx="172" cy="92" rx="4" ry="6" fill="url(#gold)" stroke="#b8860b" stroke-width="0.5"/>
+  <ellipse cx="228" cy="92" rx="4" ry="6" fill="url(#gold)" stroke="#b8860b" stroke-width="0.5"/>
+  <!-- Nose pad arms -->
+  <line x1="172" y1="86" x2="168" y2="78" stroke="url(#gold)" stroke-width="1.2"/>
+  <line x1="228" y1="86" x2="232" y2="78" stroke="url(#gold)" stroke-width="1.2"/>
 </svg>

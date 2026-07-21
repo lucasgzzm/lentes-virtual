@@ -1,4 +1,4 @@
-// Virtual Try-On Glasses - Main Application
+// Virtual Try-On Glasses v2 - 360° Real-Time Tracking
 // Uses JeelizFaceFilter + JeelizCanvas2DHelper
 
 function main() {
@@ -7,6 +7,14 @@ function main() {
     var currentCategory = 'sol';
     var faceDetected = false;
     var lastDetectState = null;
+
+    // Smooth interpolation state
+    var smooth = {
+        x: 0, y: 0, s: 1,
+        rx: 0, ry: 0, rz: 0,
+        initialized: false
+    };
+    var SMOOTH_FACTOR = 0.35;
 
     var els = {
         loadingOverlay: document.getElementById('loading-overlay'),
@@ -20,7 +28,6 @@ function main() {
         cameraContainer: document.getElementById('camera-container')
     };
 
-    // Setup event listeners
     els.categoryTabs.forEach(function(tab) {
         tab.addEventListener('click', function() {
             switchCategory(tab.dataset.category);
@@ -37,8 +44,13 @@ function main() {
 
     els.retryBtn.addEventListener('click', function() {
         els.errorOverlay.classList.add('hidden');
+        smooth.initialized = false;
         initFaceFilter();
     });
+
+    function lerp(a, b, t) {
+        return a + (b - a) * t;
+    }
 
     function initFaceFilter() {
         els.loadingOverlay.classList.remove('hidden');
@@ -46,7 +58,8 @@ function main() {
         JEELIZFACEFILTER.init({
             canvasId: 'jeeFaceFilterCanvas',
             NNCPath: 'https://cdn.jsdelivr.net/gh/jeeliz/jeelizFaceFilter@master/neuralNets/',
-            
+            followZRot: true,
+
             callbackReady: function(errCode, spec) {
                 if (errCode) {
                     showError('Error al inicializar: ' + errCode);
@@ -55,21 +68,40 @@ function main() {
                 console.log('JeelizFaceFilter ready');
                 CVD = JeelizCanvas2DHelper(spec);
                 els.loadingOverlay.classList.add('hidden');
-                
-                // Select default glasses
                 selectGlasses(els.glassesOptions[0]);
             },
 
             callbackTrack: function(detectState) {
                 if (!CVD) return;
 
-                if (detectState.detected > 0.6) {
+                if (detectState.detected > 0.5) {
                     faceDetected = true;
                     lastDetectState = detectState;
-                    drawGlasses(detectState);
+                    els.cameraContainer.classList.add('tracking');
+
+                    if (!smooth.initialized) {
+                        smooth.x = detectState.x;
+                        smooth.y = detectState.y;
+                        smooth.s = detectState.s;
+                        smooth.rx = detectState.rx;
+                        smooth.ry = detectState.ry;
+                        smooth.rz = detectState.rz;
+                        smooth.initialized = true;
+                    } else {
+                        smooth.x = lerp(smooth.x, detectState.x, SMOOTH_FACTOR);
+                        smooth.y = lerp(smooth.y, detectState.y, SMOOTH_FACTOR);
+                        smooth.s = lerp(smooth.s, detectState.s, SMOOTH_FACTOR);
+                        smooth.rx = lerp(smooth.rx, detectState.rx, SMOOTH_FACTOR);
+                        smooth.ry = lerp(smooth.ry, detectState.ry, SMOOTH_FACTOR);
+                        smooth.rz = lerp(smooth.rz, detectState.rz, SMOOTH_FACTOR);
+                    }
+
+                    drawGlasses360(smooth);
                 } else {
                     faceDetected = false;
                     lastDetectState = null;
+                    smooth.initialized = false;
+                    els.cameraContainer.classList.remove('tracking');
                     CVD.ctx.clearRect(0, 0, CVD.canvas.width, CVD.canvas.height);
                 }
                 CVD.update_canvasTexture();
@@ -78,39 +110,69 @@ function main() {
         });
     }
 
-    function drawGlasses(ds) {
+    function drawGlasses360(ds) {
         var ctx = CVD.ctx;
         var cw = CVD.canvas.width;
         var ch = CVD.canvas.height;
-        
+
         ctx.clearRect(0, 0, cw, ch);
 
         if (!glassesImage.src || !glassesImage.complete || glassesImage.naturalWidth === 0) {
             return;
         }
 
-        // Get face coordinates using the helper
         var faceCoords = CVD.getCoordinates(ds);
+        var faceCenterX = faceCoords.x + faceCoords.w / 2;
+        var faceCenterY = faceCoords.y + faceCoords.h * 0.38;
 
-        // Calculate glasses dimensions based on face width
-        var glassesW = faceCoords.w * 1.1;
-        var glassesH = glassesW * (glassesImage.naturalHeight / glassesImage.naturalWidth);
+        // Base dimensions
+        var baseW = faceCoords.w * 1.15;
+        var aspectRatio = glassesImage.naturalHeight / glassesImage.naturalWidth;
+        var baseH = baseW * aspectRatio;
 
-        // Position glasses centered on face, slightly above center (eye level)
-        var glassesX = faceCoords.x + (faceCoords.w - glassesW) / 2;
-        var glassesY = faceCoords.y + (faceCoords.h * 0.15) - (glassesH * 0.3);
-
-        // Apply rotation based on head yaw (ry)
+        // 360° EFFECT: Apply perspective distortion based on head rotation
         var ry = ds.ry || 0;
-        var centerX = faceCoords.x + faceCoords.w / 2;
-        var centerY = faceCoords.y + faceCoords.h * 0.35;
+        var rx = ds.rx || 0;
+        var rz = ds.rz || 0;
+
+        // Yaw (ry): horizontal rotation - squash width and shift
+        var yawFactor = Math.cos(ry);
+        var perspX = Math.sin(ry) * baseW * 0.12;
+
+        // Pitch (rx): vertical tilt - squash height slightly
+        var pitchFactor = Math.cos(rx * 0.5);
+
+        // Scale based on depth (scale increases = face closer)
+        var depthScale = 0.8 + ds.s * 0.5;
+
+        var finalW = baseW * Math.abs(yawFactor) * depthScale;
+        var finalH = baseH * pitchFactor * depthScale;
+
+        // Position with perspective offset
+        var glassesX = faceCenterX - finalW / 2 + perspX * depthScale;
+        var glassesY = faceCenterY - finalH * 0.35;
 
         ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(ry * 0.4);
-        ctx.translate(-centerX, -centerY);
+        ctx.translate(faceCenterX, faceCenterY);
 
-        ctx.drawImage(glassesImage, glassesX, glassesY, glassesW, glassesH);
+        // Roll rotation (head tilt left/right)
+        ctx.rotate(rz);
+
+        // 3D perspective transform using matrix
+        // Simulate yaw by skewing the canvas
+        var skewX = Math.sin(ry) * 0.15;
+        var skewY = Math.sin(rx * 0.3) * 0.08;
+        ctx.transform(1, skewY, skewX, 1, 0, 0);
+
+        ctx.translate(-faceCenterX, -faceCenterY);
+
+        // Draw with shadow for depth
+        ctx.shadowColor = 'rgba(0,0,0,0.25)';
+        ctx.shadowBlur = 8 * depthScale;
+        ctx.shadowOffsetY = 3 * depthScale;
+
+        ctx.drawImage(glassesImage, glassesX, glassesY, finalW, finalH);
+
         ctx.restore();
     }
 
@@ -119,85 +181,74 @@ function main() {
             opt.classList.remove('selected');
         });
         option.classList.add('selected');
-
-        var src = option.dataset.src;
-        glassesImage.src = src;
+        glassesImage.src = option.dataset.src;
     }
 
     function switchCategory(category) {
         currentCategory = category;
-
         els.categoryTabs.forEach(function(tab) {
             tab.classList.toggle('active', tab.dataset.category === category);
         });
-
         els.glassesOptions.forEach(function(option) {
-            if (option.dataset.type === category) {
-                option.classList.remove('hidden');
-            } else {
-                option.classList.add('hidden');
-            }
+            option.classList.toggle('hidden', option.dataset.type !== category);
         });
-
-        var firstVisible = document.querySelector('.glasses-option[data-type="' + category + '"]:not(.hidden)');
-        if (firstVisible) {
-            selectGlasses(firstVisible);
-        }
+        var first = document.querySelector('.glasses-option[data-type="' + category + '"]:not(.hidden)');
+        if (first) selectGlasses(first);
     }
 
     function capturePhoto() {
         var cv = els.captureCanvas;
         var ctx = cv.getContext('2d');
-        var video = document.querySelector('#jeeFaceFilterCanvas').previousElementSibling;
-        
-        if (!video || !video.videoWidth) {
-            // Fallback: try to capture from the WebGL canvas
-            var glCanvas = document.getElementById('jeeFaceFilterCanvas');
-            cv.width = glCanvas.width;
-            cv.height = glCanvas.height;
-            ctx.drawImage(glCanvas, 0, 0);
-        } else {
-            cv.width = video.videoWidth;
-            cv.height = video.videoHeight;
-            
-            // Draw mirrored video
-            ctx.translate(cv.width, 0);
-            ctx.scale(-1, 1);
-            ctx.drawImage(video, 0, 0, cv.width, cv.height);
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
+        var glCanvas = document.getElementById('jeeFaceFilterCanvas');
 
-            // Draw glasses overlay
-            if (faceDetected && lastDetectState && CVD) {
-                var ds = lastDetectState;
-                var scaleX = cv.width / CVD.canvas.width;
-                var scaleY = cv.height / CVD.canvas.height;
+        cv.width = glCanvas.width;
+        cv.height = glCanvas.height;
+        ctx.drawImage(glCanvas, 0, 0);
 
-                var faceCoords = CVD.getCoordinates(ds);
-                var glassesW = faceCoords.w * 1.1 * scaleX;
-                var glassesH = glassesW * (glassesImage.naturalHeight / glassesImage.naturalWidth);
-                var glassesX = (faceCoords.x + (faceCoords.w - faceCoords.w * 1.1) / 2) * scaleX;
-                var glassesY = (faceCoords.y + (faceCoords.h * 0.15) - (glassesH / scaleY * 0.3)) * scaleY;
+        // Re-draw glasses at full res
+        if (faceDetected && lastDetectState && CVD && glassesImage.complete && glassesImage.naturalWidth > 0) {
+            var ds = smooth;
+            var cw = cv.width;
+            var ch = cv.height;
+            var scaleRatio = cw / CVD.canvas.width;
 
-                var ry = ds.ry || 0;
-                var centerX = (faceCoords.x + faceCoords.w / 2) * scaleX;
-                var centerY = (faceCoords.y + faceCoords.h * 0.35) * scaleY;
+            var faceCoords = CVD.getCoordinates(ds);
+            var faceCenterX = (faceCoords.x + faceCoords.w / 2) * scaleRatio;
+            var faceCenterY = (faceCoords.y + faceCoords.h * 0.38) * scaleRatio;
 
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.rotate(ry * 0.4);
-                ctx.translate(-centerX, -centerY);
-                ctx.drawImage(glassesImage, glassesX, glassesY, glassesW, glassesH);
-                ctx.restore();
-            }
+            var baseW = faceCoords.w * 1.15 * scaleRatio;
+            var aspectRatio = glassesImage.naturalHeight / glassesImage.naturalWidth;
+            var baseH = baseW * aspectRatio;
+
+            var yawFactor = Math.cos(ds.ry);
+            var perspX = Math.sin(ds.ry) * baseW * 0.12;
+            var pitchFactor = Math.cos(ds.rx * 0.5);
+            var depthScale = 0.8 + ds.s * 0.5;
+
+            var finalW = baseW * Math.abs(yawFactor) * depthScale;
+            var finalH = baseH * pitchFactor * depthScale;
+            var glassesX = faceCenterX - finalW / 2 + perspX * depthScale;
+            var glassesY = faceCenterY - finalH * 0.35;
+
+            ctx.save();
+            ctx.translate(faceCenterX, faceCenterY);
+            ctx.rotate(ds.rz);
+            var skewX = Math.sin(ds.ry) * 0.15;
+            var skewY = Math.sin(ds.rx * 0.3) * 0.08;
+            ctx.transform(1, skewY, skewX, 1, 0, 0);
+            ctx.translate(-faceCenterX, -faceCenterY);
+            ctx.shadowColor = 'rgba(0,0,0,0.25)';
+            ctx.shadowBlur = 8 * depthScale;
+            ctx.shadowOffsetY = 3 * depthScale;
+            ctx.drawImage(glassesImage, glassesX, glassesY, finalW, finalH);
+            ctx.restore();
         }
 
-        // Download
         var link = document.createElement('a');
-        link.download = 'lentes-virtual-' + Date.now() + '.png';
+        link.download = 'lentes-360-' + Date.now() + '.png';
         link.href = cv.toDataURL('image/png');
         link.click();
 
-        // Flash effect
         els.captureBtn.style.transform = 'scale(0.95)';
         setTimeout(function() { els.captureBtn.style.transform = ''; }, 150);
     }
@@ -208,7 +259,6 @@ function main() {
         els.errorMessage.textContent = msg;
     }
 
-    // Start
     initFaceFilter();
 }
 

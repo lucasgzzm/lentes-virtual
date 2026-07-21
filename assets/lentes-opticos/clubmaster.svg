@@ -1,53 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:0.2"/>
-      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:0.1"/>
+    <!-- Clear lens -->
+    <linearGradient id="clearL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(210,215,220,0.08)"/>
+      <stop offset="50%" stop-color="rgba(200,205,215,0.04)"/>
+      <stop offset="100%" stop-color="rgba(210,215,220,0.06)"/>
     </linearGradient>
-    <linearGradient id="topFrameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#3d2b1f"/>
-      <stop offset="50%" style="stop-color:#2c1810"/>
-      <stop offset="100%" style="stop-color:#1a0f0a"/>
+    <linearGradient id="clearR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(210,215,220,0.08)"/>
+      <stop offset="50%" stop-color="rgba(200,205,215,0.04)"/>
+      <stop offset="100%" stop-color="rgba(210,215,220,0.06)"/>
     </linearGradient>
-    <linearGradient id="wireGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#c0c0c0"/>
-      <stop offset="100%" style="stop-color:#a0a0a0"/>
+    <!-- Dark acetate top rim -->
+    <linearGradient id="acetate" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="30%" stop-color="#1a1a1a"/>
+      <stop offset="70%" stop-color="#111"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
+    <!-- Gold wire bottom rim -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0d070"/>
+      <stop offset="40%" stop-color="#c9952a"/>
+      <stop offset="100%" stop-color="#a07820"/>
+    </linearGradient>
+    <!-- Glare -->
+    <radialGradient id="glareL" cx="35%" cy="28%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="glareR" cx="65%" cy="28%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <path d="M 72 65 L 15 60" stroke="url(#topFrameGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-  <path d="M 328 65 L 385 60" stroke="url(#topFrameGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-  
+
+  <!-- Left temple -->
+  <path d="M35,62 L0,59" stroke="url(#acetate)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M35,60 L0,57" stroke="rgba(60,60,60,0.3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M365,62 L400,59" stroke="url(#acetate)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M365,60 L400,57" stroke="rgba(60,60,60,0.3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
   <!-- Left lens -->
-  <!-- Thick top frame -->
-  <path d="M 80 50 L 190 50 L 190 65 L 80 65 Z" fill="url(#topFrameGrad)" filter="url(#shadow)"/>
-  <!-- Thin wire bottom and sides -->
-  <path d="M 80 65 L 80 105 Q 80 115 90 115 L 180 115 Q 190 115 190 105 L 190 65" 
-        stroke="url(#wireGrad)" stroke-width="1.5" fill="url(#lensGrad)"/>
-  
+  <!-- Top acetate rim (thick) -->
+  <path d="M48,52 L168,50 L170,68 L46,70 Z" fill="url(#acetate)" stroke="none"/>
+  <!-- Left lens shape - browline style -->
+  <path d="M48,50 L168,48 L172,54 L172,126 Q170,140 155,142 L60,144 Q46,142 44,128 L44,56 Q44,50 48,50 Z" fill="url(#clearL)" stroke="url(#gold)" stroke-width="1.2"/>
+  <!-- Top acetate overlay -->
+  <path d="M46,50 L170,48 L172,54 L172,70 L44,72 L44,56 Q44,50 48,50 Z" fill="url(#acetate)" stroke="none"/>
+  <!-- Gold wire visible on bottom/sides -->
+  <path d="M44,56 L44,128 Q46,142 60,142 L155,140 Q170,138 172,126" fill="none" stroke="url(#gold)" stroke-width="1.2"/>
+  <!-- Glare -->
+  <path d="M48,50 L168,48 L172,54 L172,126 Q170,140 155,142 L60,144 Q46,142 44,128 L44,56 Q44,50 48,50 Z" fill="url(#glareL)"/>
+  <ellipse cx="88" cy="62" rx="22" ry="6" fill="rgba(255,255,255,0.12)" transform="rotate(-4,88,62)"/>
+
   <!-- Right lens -->
-  <!-- Thick top frame -->
-  <path d="M 210 50 L 320 50 L 320 65 L 210 65 Z" fill="url(#topFrameGrad)" filter="url(#shadow)"/>
-  <!-- Thin wire bottom and sides -->
-  <path d="M 210 65 L 210 105 Q 210 115 220 115 L 310 115 Q 320 115 320 105 L 320 65" 
-        stroke="url(#wireGrad)" stroke-width="1.5" fill="url(#lensGrad)"/>
-  
-  <!-- Bridge -->
-  <path d="M 190 60 Q 200 52 210 60" stroke="url(#topFrameGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
-  
+  <!-- Top acetate rim -->
+  <path d="M232,50 L352,48 L354,50 L354,56 Q356,50 352,48 L232,50 Z" fill="url(#acetate)" stroke="none"/>
+  <path d="M232,48 L352,50 L356,56 L356,128 Q354,142 340,142 L245,144 Q230,142 228,126 L228,54 Q228,48 232,48 Z" fill="url(#clearR)" stroke="url(#gold)" stroke-width="1.2"/>
+  <path d="M228,50 L354,48 L356,54 L356,72 L228,70 L228,56 Q228,50 232,50 Z" fill="url(#acetate)" stroke="none"/>
+  <path d="M356,56 L356,128 Q354,142 340,142 L245,144 Q230,142 228,126" fill="none" stroke="url(#gold)" stroke-width="1.2"/>
+  <path d="M232,48 L352,50 L356,56 L356,128 Q354,142 340,142 L245,144 Q230,142 228,126 L228,54 Q228,48 232,48 Z" fill="url(#glareR)"/>
+  <ellipse cx="312" cy="62" rx="22" ry="6" fill="rgba(255,255,255,0.12)" transform="rotate(4,312,62)"/>
+
+  <!-- Bridge (gold wire) -->
+  <path d="M172,66 Q200,82 228,66" stroke="url(#gold)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Bridge acetate connection -->
+  <rect x="168" y="52" width="8" height="16" rx="2" fill="url(#acetate)"/>
+  <rect x="224" y="52" width="8" height="16" rx="2" fill="url(#acetate)"/>
+
   <!-- Nose pads -->
-  <ellipse cx="188" cy="80" rx="2.5" ry="4" fill="#c0c0c0"/>
-  <ellipse cx="212" cy="80" rx="2.5" ry="4" fill="#c0c0c0"/>
-  
-  <!-- Lens reflections -->
-  <path d="M 95 58 L 175 58" stroke="#ffffff" stroke-width="0.8" opacity="0.15"/>
-  <path d="M 225 58 L 305 58" stroke="#ffffff" stroke-width="0.8" opacity="0.15"/>
-  
-  <!-- Hinge details -->
-  <rect x="72" y="58" width="8" height="8" rx="1" fill="#c0c0c0"/>
-  <rect x="320" y="58" width="8" height="8" rx="1" fill="#c0c0c0"/>
+  <ellipse cx="184" cy="88" rx="3" ry="5" fill="url(#gold)" stroke="#a07820" stroke-width="0.5"/>
+  <ellipse cx="216" cy="88" rx="3" ry="5" fill="url(#gold)" stroke="#a07820" stroke-width="0.5"/>
+  <!-- Nose pad arms -->
+  <line x1="184" y1="83" x2="180" y2="70" stroke="url(#gold)" stroke-width="0.8"/>
+  <line x1="216" y1="83" x2="220" y2="70" stroke="url(#gold)" stroke-width="0.8"/>
 </svg>

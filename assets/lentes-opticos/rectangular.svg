@@ -1,44 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#e6f2ff;stop-opacity:0.3"/>
-      <stop offset="50%" style="stop-color:#cce5ff;stop-opacity:0.2"/>
-      <stop offset="100%" style="stop-color:#b3d9ff;stop-opacity:0.15"/>
+    <!-- Clear lens with blue-light tint -->
+    <linearGradient id="clearL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(200,220,240,0.12)"/>
+      <stop offset="50%" stop-color="rgba(180,210,240,0.06)"/>
+      <stop offset="100%" stop-color="rgba(200,220,240,0.1)"/>
     </linearGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#e8e8e8"/>
-      <stop offset="50%" style="stop-color:#c0c0c0"/>
-      <stop offset="100%" style="stop-color:#a8a8a8"/>
+    <linearGradient id="clearR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(200,220,240,0.12)"/>
+      <stop offset="50%" stop-color="rgba(180,210,240,0.06)"/>
+      <stop offset="100%" stop-color="rgba(200,220,240,0.1)"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0.5" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.15"/>
-    </filter>
+    <!-- Silver metal frame -->
+    <linearGradient id="silver" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8e8e8"/>
+      <stop offset="25%" stop-color="#c0c0c0"/>
+      <stop offset="50%" stop-color="#a8a8a8"/>
+      <stop offset="75%" stop-color="#b8b8b8"/>
+      <stop offset="100%" stop-color="#909090"/>
+    </linearGradient>
+    <!-- Blue light reflection -->
+    <linearGradient id="bluelight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(100,150,255,0.08)"/>
+      <stop offset="50%" stop-color="rgba(100,150,255,0.15)"/>
+      <stop offset="100%" stop-color="rgba(100,150,255,0.05)"/>
+    </linearGradient>
+    <!-- Glare -->
+    <radialGradient id="glareL" cx="32%" cy="28%" r="35%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="glareR" cx="68%" cy="28%" r="35%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <line x1="68" y1="72" x2="15" y2="68" stroke="url(#frameGrad)" stroke-width="2" stroke-linecap="round"/>
-  <line x1="332" y1="72" x2="385" y2="68" stroke="url(#frameGrad)" stroke-width="2" stroke-linecap="round"/>
-  
-  <!-- Left lens (rectangular) -->
-  <rect x="75" y="52" width="115" height="55" rx="4" ry="4" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2" filter="url(#shadow)"/>
-  
-  <!-- Right lens (rectangular) -->
-  <rect x="210" y="52" width="115" height="55" rx="4" ry="4" 
-        fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2" filter="url(#shadow)"/>
-  
+
+  <!-- Left temple -->
+  <path d="M42,72 L0,69" stroke="url(#silver)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M42,73 L0,70" stroke="rgba(0,0,0,0.08)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M358,72 L400,69" stroke="url(#silver)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M358,73 L400,70" stroke="rgba(0,0,0,0.08)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lens - rectangular -->
+  <rect x="52" y="54" width="110" height="72" rx="6" ry="6" fill="url(#clearL)" stroke="url(#silver)" stroke-width="1.5"/>
+  <rect x="52" y="54" width="110" height="72" rx="6" ry="6" fill="url(#bluelight)"/>
+  <rect x="52" y="54" width="110" height="72" rx="6" ry="6" fill="url(#glareL)"/>
+  <ellipse cx="82" cy="66" rx="18" ry="6" fill="rgba(255,255,255,0.15)" transform="rotate(-3,82,66)"/>
+  <!-- Lens edge highlight -->
+  <line x1="56" y1="56" x2="158" y2="56" stroke="rgba(200,200,200,0.2)" stroke-width="0.5"/>
+
+  <!-- Right lens - rectangular -->
+  <rect x="238" y="54" width="110" height="72" rx="6" ry="6" fill="url(#clearR)" stroke="url(#silver)" stroke-width="1.5"/>
+  <rect x="238" y="54" width="110" height="72" rx="6" ry="6" fill="url(#bluelight)"/>
+  <rect x="238" y="54" width="110" height="72" rx="6" ry="6" fill="url(#glareR)"/>
+  <ellipse cx="318" cy="66" rx="18" ry="6" fill="rgba(255,255,255,0.15)" transform="rotate(3,318,66)"/>
+  <line x1="242" y1="56" x2="344" y2="56" stroke="rgba(200,200,200,0.2)" stroke-width="0.5"/>
+
   <!-- Bridge -->
-  <path d="M 190 72 L 210 72" stroke="url(#frameGrad)" stroke-width="2" stroke-linecap="round"/>
-  
-  <!-- Nose pads -->
-  <ellipse cx="188" cy="82" rx="2.5" ry="3.5" fill="#c0c0c0"/>
-  <ellipse cx="212" cy="82" rx="2.5" ry="3.5" fill="#c0c0c0"/>
-  
-  <!-- Lens reflections -->
-  <path d="M 85 62 L 180 62" stroke="#ffffff" stroke-width="0.8" opacity="0.2"/>
-  <path d="M 220 62 L 315 62" stroke="#ffffff" stroke-width="0.8" opacity="0.2"/>
-  
-  <!-- Hinge details -->
-  <rect x="68" y="68" width="7" height="7" rx="1" fill="#d0d0d0"/>
-  <rect x="325" y="68" width="7" height="7" rx="1" fill="#d0d0d0"/>
+  <path d="M162,74 Q200,86 238,74" stroke="url(#silver)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose pads (thin metal) -->
+  <ellipse cx="176" cy="90" rx="3" ry="5" fill="url(#silver)" stroke="#909090" stroke-width="0.5"/>
+  <ellipse cx="224" cy="90" rx="3" ry="5" fill="url(#silver)" stroke="#909090" stroke-width="0.5"/>
+  <!-- Nose pad arms -->
+  <line x1="176" y1="85" x2="172" y2="76" stroke="url(#silver)" stroke-width="1"/>
+  <line x1="224" y1="85" x2="228" y2="76" stroke="url(#silver)" stroke-width="1"/>
 </svg>

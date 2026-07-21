@@ -1,44 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f0f8ff;stop-opacity:0.25"/>
-      <stop offset="100%" style="stop-color:#e6f2ff;stop-opacity:0.15"/>
+    <!-- Clear lens -->
+    <linearGradient id="clearL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(220,225,230,0.08)"/>
+      <stop offset="50%" stop-color="rgba(200,210,220,0.04)"/>
+      <stop offset="100%" stop-color="rgba(220,225,230,0.08)"/>
     </linearGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#4a4a4a"/>
-      <stop offset="100%" style="stop-color:#2d2d2d"/>
+    <linearGradient id="clearR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(220,225,230,0.08)"/>
+      <stop offset="50%" stop-color="rgba(200,210,220,0.04)"/>
+      <stop offset="100%" stop-color="rgba(220,225,230,0.08)"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0.5" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.2"/>
-    </filter>
+    <!-- Dark matte frame -->
+    <linearGradient id="matte" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="40%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#222"/>
+    </linearGradient>
+    <!-- Glare effect -->
+    <radialGradient id="glareL" cx="35%" cy="30%" r="32%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.28)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="glareR" cx="65%" cy="30%" r="32%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.28)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- Subtle lens edge reflection -->
+    <linearGradient id="edgeL" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.08)"/>
+    </linearGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <line x1="58" y1="78" x2="15" y2="74" stroke="url(#frameGrad)" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="342" y1="78" x2="385" y2="74" stroke="url(#frameGrad)" stroke-width="2.5" stroke-linecap="round"/>
-  
-  <!-- Left lens (circle) -->
-  <circle cx="125" cy="80" r="45" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2.5" filter="url(#shadow)"/>
-  
-  <!-- Right lens (circle) -->
-  <circle cx="275" cy="80" r="45" fill="url(#lensGrad)" stroke="url(#frameGrad)" stroke-width="2.5" filter="url(#shadow)"/>
-  
+
+  <!-- Left temple -->
+  <path d="M44,74 L0,71" stroke="url(#matte)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M44,72 L0,69" stroke="rgba(70,70,70,0.3)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M356,74 L400,71" stroke="url(#matte)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M356,72 L400,69" stroke="rgba(70,70,70,0.3)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lens - circle -->
+  <circle cx="118" cy="82" r="48" fill="url(#clearL)" stroke="url(#matte)" stroke-width="3.5"/>
+  <circle cx="118" cy="82" r="48" fill="url(#edgeL)"/>
+  <circle cx="118" cy="82" r="48" fill="url(#glareL)"/>
+  <ellipse cx="102" cy="66" rx="16" ry="7" fill="rgba(255,255,255,0.15)" transform="rotate(-10,102,66)"/>
+  <ellipse cx="130" cy="100" rx="5" ry="3" fill="rgba(255,255,255,0.08)"/>
+  <!-- Lens rim highlight -->
+  <circle cx="118" cy="82" r="48" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+  <!-- Right lens - circle -->
+  <circle cx="282" cy="82" r="48" fill="url(#clearR)" stroke="url(#matte)" stroke-width="3.5"/>
+  <circle cx="282" cy="82" r="48" fill="url(#edgeL)"/>
+  <circle cx="282" cy="82" r="48" fill="url(#glareR)"/>
+  <ellipse cx="292" cy="66" rx="16" ry="7" fill="rgba(255,255,255,0.15)" transform="rotate(10,292,66)"/>
+  <ellipse cx="270" cy="100" rx="5" ry="3" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="282" cy="82" r="48" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
   <!-- Bridge -->
-  <path d="M 170 75 Q 200 60 230 75" stroke="url(#frameGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  
+  <path d="M165,76 Q200,90 235,76" stroke="url(#matte)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
   <!-- Nose pads -->
-  <ellipse cx="172" cy="88" rx="2.5" ry="3.5" fill="#4a4a4a"/>
-  <ellipse cx="228" cy="88" rx="2.5" ry="3.5" fill="#4a4a4a"/>
-  
-  <!-- Lens reflection effect -->
-  <path d="M 105 58 Q 115 52 125 58" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.25"/>
-  <path d="M 255 58 Q 265 52 275 58" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.25"/>
-  
-  <!-- Inner lens highlight -->
-  <circle cx="125" cy="80" r="38" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
-  <circle cx="275" cy="80" r="38" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
-  
-  <!-- Hinge details -->
-  <circle cx="80" cy="78" r="2" fill="#5a5a5a"/>
-  <circle cx="320" cy="78" r="2" fill="#5a5a5a"/>
+  <ellipse cx="180" cy="92" rx="4" ry="6" fill="#333" stroke="#222" stroke-width="0.6"/>
+  <ellipse cx="220" cy="92" rx="4" ry="6" fill="#333" stroke="#222" stroke-width="0.6"/>
+  <!-- Nose pad arms -->
+  <line x1="180" y1="86" x2="176" y2="78" stroke="url(#matte)" stroke-width="1.2"/>
+  <line x1="220" y1="86" x2="224" y2="78" stroke="url(#matte)" stroke-width="1.2"/>
 </svg>

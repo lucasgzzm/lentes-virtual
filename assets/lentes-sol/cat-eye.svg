@@ -1,46 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
   <defs>
-    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#2d1b00;stop-opacity:0.95"/>
-      <stop offset="50%" style="stop-color:#1a0f00;stop-opacity:0.9"/>
-      <stop offset="100%" style="stop-color:#0d0800;stop-opacity:0.85"/>
+    <!-- Tortoiseshell frame gradient -->
+    <linearGradient id="tortoise" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6b3a1f"/>
+      <stop offset="20%" stop-color="#c47a2a"/>
+      <stop offset="35%" stop-color="#3d1f0e"/>
+      <stop offset="50%" stop-color="#a86520"/>
+      <stop offset="70%" stop-color="#4a2510"/>
+      <stop offset="85%" stop-color="#c48a30"/>
+      <stop offset="100%" stop-color="#5a2e14"/>
     </linearGradient>
-    <linearGradient id="shellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#8b4513"/>
-      <stop offset="25%" style="stop-color:#a0522d"/>
-      <stop offset="50%" style="stop-color:#cd853f"/>
-      <stop offset="75%" style="stop-color:#8b4513"/>
-      <stop offset="100%" style="stop-color:#a0522d"/>
+    <linearGradient id="tortoise2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a2e14"/>
+      <stop offset="25%" stop-color="#c48a30"/>
+      <stop offset="40%" stop-color="#3d1f0e"/>
+      <stop offset="60%" stop-color="#a86520"/>
+      <stop offset="80%" stop-color="#6b3a1f"/>
+      <stop offset="100%" stop-color="#4a2510"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.35"/>
-    </filter>
+    <!-- Lens gradient - dark pink/brown -->
+    <linearGradient id="lensL" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#4a2028"/>
+      <stop offset="40%" stop-color="#3a1820"/>
+      <stop offset="70%" stop-color="#5a2530"/>
+      <stop offset="100%" stop-color="#3a1518"/>
+    </linearGradient>
+    <linearGradient id="lensR" x1="100%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#4a2028"/>
+      <stop offset="40%" stop-color="#3a1820"/>
+      <stop offset="70%" stop-color="#5a2530"/>
+      <stop offset="100%" stop-color="#3a1518"/>
+    </linearGradient>
+    <!-- Reflections -->
+    <radialGradient id="refL" cx="35%" cy="28%" r="38%">
+      <stop offset="0%" stop-color="rgba(255,220,200,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,220,200,0)"/>
+    </radialGradient>
+    <radialGradient id="refR" cx="65%" cy="28%" r="38%">
+      <stop offset="0%" stop-color="rgba(255,220,200,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,220,200,0)"/>
+    </radialGradient>
   </defs>
-  
-  <!-- Temple arms -->
-  <path d="M 75 68 L 15 62" stroke="url(#shellGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <path d="M 325 68 L 385 62" stroke="url(#shellGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
-  
-  <!-- Left lens (cat-eye shape with upswept corners) -->
-  <path d="M 95 55 Q 95 35 115 30 Q 140 25 160 35 Q 175 45 180 55 L 185 75 Q 185 105 160 115 Q 135 120 115 110 Q 95 100 90 75 Z" 
-        fill="url(#lensGrad)" stroke="url(#shellGrad)" stroke-width="6" stroke-linejoin="round" filter="url(#shadow)"/>
-  
-  <!-- Right lens (cat-eye shape with upswept corners) -->
-  <path d="M 305 55 Q 305 35 285 30 Q 260 25 240 35 Q 225 45 220 55 L 215 75 Q 215 105 240 115 Q 265 120 285 110 Q 305 100 310 75 Z" 
-        fill="url(#lensGrad)" stroke="url(#shellGrad)" stroke-width="6" stroke-linejoin="round" filter="url(#shadow)"/>
-  
-  <!-- Cat-eye decorative points -->
-  <path d="M 92 52 L 80 42 L 95 50" fill="url(#shellGrad)" stroke="url(#shellGrad)" stroke-width="1"/>
-  <path d="M 308 52 L 320 42 L 305 50" fill="url(#shellGrad)" stroke="url(#shellGrad)" stroke-width="1"/>
-  
+
+  <!-- Left temple -->
+  <path d="M38,66 L0,62" stroke="url(#tortoise)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M38,63 L0,59" stroke="rgba(196,122,42,0.3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Right temple -->
+  <path d="M362,66 L400,62" stroke="url(#tortoise2)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M362,63 L400,59" stroke="rgba(196,122,42,0.3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lens - cat eye shape -->
+  <path d="M50,70 L170,52 L180,58 L175,65 L165,128 Q160,142 145,144 L65,146 Q50,146 48,132 L42,78 Q40,70 50,70 Z" fill="url(#lensL)" stroke="url(#tortoise)" stroke-width="4.5" stroke-linejoin="round"/>
+  <!-- Left lens reflections -->
+  <path d="M50,70 L170,52 L180,58 L175,65 L165,128 Q160,142 145,144 L65,146 Q50,146 48,132 L42,78 Q40,70 50,70 Z" fill="url(#refL)"/>
+  <ellipse cx="95" cy="72" rx="22" ry="7" fill="rgba(255,255,255,0.18)" transform="rotate(-8,95,72)"/>
+  <ellipse cx="68" cy="88" rx="5" ry="3" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Right lens - cat eye shape (mirrored) -->
+  <path d="M350,70 L230,52 L220,58 L225,65 L235,128 Q240,142 255,144 L335,146 Q350,146 352,132 L358,78 Q360,70 350,70 Z" fill="url(#lensR)" stroke="url(#tortoise2)" stroke-width="4.5" stroke-linejoin="round"/>
+  <!-- Right lens reflections -->
+  <path d="M350,70 L230,52 L220,58 L225,65 L235,128 Q240,142 255,144 L335,146 Q350,146 352,132 L358,78 Q360,70 350,70 Z" fill="url(#refR)"/>
+  <ellipse cx="305" cy="72" rx="22" ry="7" fill="rgba(255,255,255,0.18)" transform="rotate(8,305,72)"/>
+
   <!-- Bridge -->
-  <path d="M 185 68 Q 200 58 215 68" stroke="url(#shellGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-  
+  <path d="M180,72 Q200,86 220,72" stroke="url(#tortoise)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
   <!-- Nose pads -->
-  <ellipse cx="186" cy="82" rx="3" ry="5" fill="#a0522d"/>
-  <ellipse cx="214" cy="82" rx="3" ry="5" fill="#a0522d"/>
-  
-  <!-- Hinge details -->
-  <rect x="78" y="62" width="6" height="6" rx="1" fill="#cd853f"/>
-  <rect x="316" y="62" width="6" height="6" rx="1" fill="#cd853f"/>
+  <ellipse cx="190" cy="90" rx="4" ry="6" fill="#8b5a2b" stroke="#4a2510" stroke-width="0.6"/>
+  <ellipse cx="210" cy="90" rx="4" ry="6" fill="#8b5a2b" stroke="#4a2510" stroke-width="0.6"/>
+  <!-- Nose pad arms -->
+  <line x1="190" y1="84" x2="187" y2="75" stroke="url(#tortoise)" stroke-width="1.2"/>
+  <line x1="210" y1="84" x2="213" y2="75" stroke="url(#tortoise)" stroke-width="1.2"/>
 </svg>
